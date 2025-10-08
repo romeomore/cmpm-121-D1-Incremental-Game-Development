@@ -15,11 +15,10 @@ document.body.appendChild(button);
 button.addEventListener("click", () => {
   count++;
   button.textContent = `You Have ${count} Eggs, you Hen`;
-
-  setInterval(autoClicker, 1000);
-
+});
+setInterval(autoClicker, 1000);
+  
   function autoClicker() {
     count++;
     button.textContent = `You Have ${count} Eggs, you Hen`;
   }
-});
