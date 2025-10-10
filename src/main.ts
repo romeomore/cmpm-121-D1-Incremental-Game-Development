@@ -18,6 +18,7 @@ function autoClicker() {
 const button = document.createElement("button");
 button.textContent = "Click Me To Gain An Egg!!";
 document.body.appendChild(button);
+
 button.addEventListener("click", () => {
   count++;
   button.textContent = `You Have ${count} Eggs, you Hen`;
