@@ -9,7 +9,6 @@ document.body.innerHTML = `
   <p>Hello World, I'm an egg counter</p> 
 `;
 setInterval(autoClicker, 1000);
-
 function autoClicker() {
   count++;
   button.textContent = `You Have ${count} Eggs, you Hen`;
