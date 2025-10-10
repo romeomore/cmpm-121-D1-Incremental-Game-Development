@@ -13,13 +13,32 @@ const button = document.createElement("button");
 button.textContent = "Click Me To Gain An Egg!!";
 document.body.appendChild(button);
 
+const counterDisplay = document.createElement("div");
+counterDisplay.textContent = `You have ${count} eggs!`;
+document.body.appendChild(counterDisplay);
+
 button.addEventListener("click", () => {
   count++;
-  button.textContent = `You Have ${count} Eggs, you Hen`;
+  counterDisplay.textContent = `You have ${count} eggs!`;
 });
-
+/*
 setInterval(autoClicker, 1000);
 function autoClicker() {
   count++;
-  button.textContent = `You Have ${count} Eggs, you Hen`;
+  counterDisplay.textContent = `You have ${count} eggs!`;
 }
+*/
+
+let start: number
+
+function step(timestamp: number) {
+  if (start === undefined) {
+    start = timestamp;
+  }
+  const delta = (timestamp - start) / 1000;
+  start = timestamp
+  count += delta;
+  counterDisplay.textContent = `You have ${Math.floor(count)} eggs!`;
+  requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
