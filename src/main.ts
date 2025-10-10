@@ -8,11 +8,6 @@ document.body.innerHTML = `
   <p>Want to build a clicker that works around chickens that evolve and drop better eggs as you upgrade.</p>
   <p>Hello World, I'm an egg counter</p> 
 `;
-setInterval(autoClicker, 1000);
-function autoClicker() {
-  count++;
-  button.textContent = `You Have ${count} Eggs, you Hen`;
-}
 
 const button = document.createElement("button");
 button.textContent = "Click Me To Gain An Egg!!";
@@ -22,3 +17,9 @@ button.addEventListener("click", () => {
   count++;
   button.textContent = `You Have ${count} Eggs, you Hen`;
 });
+
+setInterval(autoClicker, 1000);
+function autoClicker() {
+  count++;
+  button.textContent = `You Have ${count} Eggs, you Hen`;
+}
