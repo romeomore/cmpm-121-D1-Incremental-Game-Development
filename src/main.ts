@@ -21,7 +21,7 @@ button.addEventListener("click", () => {
   count++;
   counterDisplay.textContent = `You have ${count} eggs!`;
 });
-/*
+/* Old Automatic Clicking
 setInterval(autoClicker, 1000);
 function autoClicker() {
   count++;
@@ -30,6 +30,7 @@ function autoClicker() {
 */
 
 let start: number;
+let growthRate = 1;
 
 function step(timestamp: number) {
   if (start === undefined) {
@@ -37,8 +38,20 @@ function step(timestamp: number) {
   }
   const delta = (timestamp - start) / 1000;
   start = timestamp;
-  count += delta;
+  count += delta * growthRate;
   counterDisplay.textContent = `You have ${Math.floor(count)} eggs!`;
+  upgradeButton.disabled = Math.floor(count) < 10;
   requestAnimationFrame(step);
 }
 requestAnimationFrame(step);
+
+const upgradeButton = document.createElement("button");
+upgradeButton.textContent = "Click Me To Gain a Hun(10 eggs)";
+document.body.appendChild(upgradeButton);
+
+upgradeButton.addEventListener("click", () => {
+  if (count >= 10) {
+    count -= 10;
+    growthRate++;
+  }
+});
