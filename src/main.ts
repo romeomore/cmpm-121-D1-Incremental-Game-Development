@@ -29,14 +29,14 @@ function autoClicker() {
 }
 */
 
-let start: number
+let start: number;
 
 function step(timestamp: number) {
   if (start === undefined) {
     start = timestamp;
   }
   const delta = (timestamp - start) / 1000;
-  start = timestamp
+  start = timestamp;
   count += delta;
   counterDisplay.textContent = `You have ${Math.floor(count)} eggs!`;
   requestAnimationFrame(step);
