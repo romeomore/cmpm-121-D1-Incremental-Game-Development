@@ -40,6 +40,7 @@ interface Item {
   rate: number;
   emoji: string;
   description: string;
+  quantity: number;
 }
 
 const avaliableItems: Item[] = [
@@ -49,6 +50,7 @@ const avaliableItems: Item[] = [
     rate: 0.1,
     emoji: "🐣",
     description: "Hen that lays eggs slowly but surely",
+    quantity: 0,
   },
   {
     name: "Duck",
@@ -56,6 +58,7 @@ const avaliableItems: Item[] = [
     rate: 2,
     emoji: "🦆",
     description: "Quacks a lot but helps gather eggs",
+    quantity: 0,
   },
   {
     name: "Swan",
@@ -63,6 +66,7 @@ const avaliableItems: Item[] = [
     rate: 10,
     emoji: "🦢",
     description: "Elegantly and efficiently lays eggs",
+    quantity: 0,
   },
   {
     name: "Peacock",
@@ -70,6 +74,7 @@ const avaliableItems: Item[] = [
     rate: 25,
     emoji: "🦚",
     description: "Struts to help boost egg emprie",
+    quantity: 0,
   },
   {
     name: "Golden Goose",
@@ -77,6 +82,7 @@ const avaliableItems: Item[] = [
     rate: 50,
     emoji: "🦄",
     description: "Mythical creature that lays pure golden eggs",
+    quantity: 0,
   },
 ];
 
@@ -100,16 +106,34 @@ avaliableItems.forEach((item) => {
       count -= item.cost;
       growthRate += item.rate;
       item.cost *= 1.15;
+      item.quantity += 1;
       grDisplay.textContent = `Current Growth Rate is ${
         growthRate.toFixed(1)
       }!`;
       upgradeButton.textContent = `Click Me To Gain a ${item.emoji} (${
         item.cost.toFixed(0)
       } eggs!!)`;
+      updateOwnedDisplay();
     }
   });
   upgradeButtons.push(upgradeButton);
 });
+const ownedDisplay = document.createElement("div");
+ownedDisplay.style.marginTop = "20px";
+ownedDisplay.style.padding = "10px";
+ownedDisplay.style.borderTop = "2px solid #ccc";
+ownedDisplay.textContent = "Owned Items:";
+document.body.appendChild(ownedDisplay);
+
+function updateOwnedDisplay() {
+  ownedDisplay.innerHTML = "<strong>Owned Items:</strong><br>";
+  avaliableItems.forEach((item) => {
+    if (item.quantity > 0) {
+      ownedDisplay.innerHTML +=
+        `${item.emoji} ${item.name}: ${item.quantity}<br>`;
+    }
+  });
+}
 
 function step(timestamp: number) {
   if (start === undefined) {
