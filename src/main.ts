@@ -2,15 +2,12 @@ import "./style.css";
 
 let count = 0;
 
-document.body.innerHTML = `
-  <p>Hello world! I just edited this page.</p>
-  <p></p>
-  <p>Want to build a clicker that works around chickens that evolve and drop better eggs as you upgrade.</p>
-  <p>Hello World, I'm an egg counter</p> 
-`;
+const subtitle = document.createElement("p");
+subtitle.textContent = "Hello World, I'm an egg counter";
+document.body.appendChild(subtitle);
 
 const button = document.createElement("button");
-button.textContent = "Click Me To Gain An Egg!!";
+button.textContent = "Click Me To Gain An Egg!!🥚";
 document.body.appendChild(button);
 
 const counterDisplay = document.createElement("div");
@@ -19,7 +16,7 @@ document.body.appendChild(counterDisplay);
 
 button.addEventListener("click", () => {
   count += 1;
-  counterDisplay.textContent = `You have ${count} eggs!`;
+  counterDisplay.textContent = `You have ${count} eggs! 🥚`;
 });
 /* Old Automatic Clicking
 setInterval(autoClicker, 1000);
@@ -40,7 +37,7 @@ function step(timestamp: number) {
   start = timestamp;
 
   count += delta * growthRate;
-  counterDisplay.textContent = `You have ${Math.floor(count)} eggs!`;
+  counterDisplay.textContent = `You have ${Math.floor(count)} eggs! 🥚`;
   upgradeButtonA.disabled = Math.floor(count) < upButtonAcost;
   upgradeButtonB.disabled = Math.floor(count) < upButtonBcost;
   upgradeButtonC.disabled = Math.floor(count) < upButtonCcost;
@@ -52,7 +49,7 @@ let upButtonBcost = 100;
 let upButtonCcost = 1000;
 
 const upgradeButtonA = document.createElement("button");
-upgradeButtonA.textContent = `Click Me To Gain a Hun (${upButtonAcost} eggs)`;
+upgradeButtonA.textContent = `Click Me To Gain a Hen 🐣(${upButtonAcost} eggs)`;
 document.body.appendChild(upgradeButtonA);
 
 upgradeButtonA.addEventListener("click", () => {
@@ -61,14 +58,15 @@ upgradeButtonA.addEventListener("click", () => {
     growthRate += .1;
     grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
     upButtonAcost *= 1.15;
-    upgradeButtonA.textContent = `Click Me To Gain a Hun (${
+    upgradeButtonA.textContent = `Click Me To Gain a Hen 🐣(${
       upButtonAcost.toFixed(0)
     } eggs)`;
   }
 });
 
 const upgradeButtonB = document.createElement("button");
-upgradeButtonB.textContent = `Click Me To Gain a Hun (${upButtonBcost} eggs)`;
+upgradeButtonB.textContent =
+  `Click Me To Gain a Duck 🦆(${upButtonBcost} eggs)`;
 document.body.appendChild(upgradeButtonB);
 
 upgradeButtonB.addEventListener("click", () => {
@@ -77,14 +75,15 @@ upgradeButtonB.addEventListener("click", () => {
     growthRate += 2;
     grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
     upButtonBcost *= 1.15;
-    upgradeButtonB.textContent = `Click Me To Gain a Hun (${
+    upgradeButtonB.textContent = `Click Me To Gain a Duck 🦆 (${
       upButtonBcost.toFixed(0)
     } eggs)`;
   }
 });
 
 const upgradeButtonC = document.createElement("button");
-upgradeButtonC.textContent = `Click Me To Gain a Hun (${upButtonCcost} eggs)`;
+upgradeButtonC.textContent =
+  `Click Me To Gain a Golden Goose 🦄 (${upButtonCcost} eggs)`;
 document.body.appendChild(upgradeButtonC);
 
 upgradeButtonC.addEventListener("click", () => {
@@ -93,7 +92,7 @@ upgradeButtonC.addEventListener("click", () => {
     growthRate += 50;
     grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
     upButtonCcost *= 1.15;
-    upgradeButtonC.textContent = `Click Me To Gain a Hun (${
+    upgradeButtonC.textContent = `Click Me To Gain a Golden Goose 🦄 (${
       upButtonCcost.toFixed(0)
     } eggs)`;
   }
