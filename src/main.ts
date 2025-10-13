@@ -1,6 +1,8 @@
 import "./style.css";
 
 let count = 0;
+let start: number;
+let growthRate = 1;
 
 const subtitle = document.createElement("p");
 subtitle.textContent = "Hello World, I'm an egg counter";
@@ -14,6 +16,12 @@ const counterDisplay = document.createElement("div");
 counterDisplay.textContent = `You have ${count} eggs!`;
 document.body.appendChild(counterDisplay);
 
+const grDisplay = document.createElement("div");
+document.body.appendChild(grDisplay);
+grDisplay.textContent = `Current Growth Rate is ${
+  growthRate.toFixed(1)
+} eggs/sec!`;
+
 button.addEventListener("click", () => {
   count += 1;
   counterDisplay.textContent = `You have ${count} eggs! 🥚`;
@@ -25,9 +33,43 @@ function autoClicker() {
   counterDisplay.textContent = `You have ${count} eggs!`;
 }
 */
+interface Item {
+  name: string;
+  cost: number;
+  rate: number;
+  emoji: string;
+}
 
-let start: number;
-let growthRate = 1;
+const avaliableItems: Item[] = [
+  { name: "Hen", cost: 10, rate: 0.1, emoji: "🐣" },
+  { name: "Duck", cost: 100, rate: 2, emoji: "🦆" },
+  { name: "Golden Goose", cost: 1000, rate: 50, emoji: "🦄" },
+];
+
+const upgradeButtons: HTMLButtonElement[] = [];
+
+avaliableItems.forEach((item) => {
+  const upgradeButton = document.createElement("button");
+  upgradeButton.textContent =
+    `Click Me To Gain a ${item.name} ${item.emoji} (${item.cost} eggs!!) +${item.rate} eggs/sec`;
+  upgradeButton.disabled = true;
+  document.body.appendChild(upgradeButton);
+
+  upgradeButton.addEventListener("click", () => {
+    if (count >= item.cost) {
+      count -= item.cost;
+      growthRate += item.rate;
+      item.cost *= 1.15;
+      grDisplay.textContent = `Current Growth Rate is ${
+        growthRate.toFixed(1)
+      }!`;
+      upgradeButton.textContent = `Click Me To Gain a ${item.emoji} (${
+        item.cost.toFixed(0)
+      } eggs!!) +${item.rate}eggs/sec`;
+    }
+  });
+  upgradeButtons.push(upgradeButton);
+});
 
 function step(timestamp: number) {
   if (start === undefined) {
@@ -35,14 +77,15 @@ function step(timestamp: number) {
   }
   const delta = (timestamp - start) / 1000;
   start = timestamp;
-
   count += delta * growthRate;
   counterDisplay.textContent = `You have ${Math.floor(count)} eggs! 🥚`;
-  upgradeButtonA.disabled = Math.floor(count) < upButtonAcost;
-  upgradeButtonB.disabled = Math.floor(count) < upButtonBcost;
-  upgradeButtonC.disabled = Math.floor(count) < upButtonCcost;
+  avaliableItems.forEach((item, i) => {
+    upgradeButtons[i].disabled = Math.floor(count) < item.cost;
+  });
   requestAnimationFrame(step);
 }
+requestAnimationFrame(step);
+/*
 requestAnimationFrame(step);
 let upButtonAcost = 10;
 let upButtonBcost = 100;
@@ -98,8 +141,18 @@ upgradeButtonC.addEventListener("click", () => {
   }
 });
 
-const grDisplay = document.createElement("div");
-document.body.appendChild(grDisplay);
-grDisplay.textContent = `Current Growth Rate is ${
-  growthRate.toFixed(1)
-} eggs/sec!`;
+function step(timestamp: number) {
+  if (start === undefined) {
+    start = timestamp;
+  }
+  const delta = (timestamp - start) / 1000;
+  start = timestamp;
+
+  count += delta * growthRate;
+  counterDisplay.textContent = `You have ${Math.floor(count)} eggs! 🥚`;
+  upgradeButtonA.disabled = Math.floor(count) < upButtonAcost;
+  upgradeButtonB.disabled = Math.floor(count) < upButtonBcost;
+  upgradeButtonC.disabled = Math.floor(count) < upButtonCcost;
+  requestAnimationFrame(step);
+}
+*/
