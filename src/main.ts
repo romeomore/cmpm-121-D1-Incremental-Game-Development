@@ -27,7 +27,8 @@ button.addEventListener("click", () => {
   counterDisplay.textContent = `You have ${count} eggs! 🥚`;
 });
 /* Old Automatic Clicking
-setInterval(autoClicker, 1000);
+se
+tInterval(autoClicker, 1000);
 function autoClicker() {
   count++;
   counterDisplay.textContent = `You have ${count} eggs!`;
@@ -38,12 +39,45 @@ interface Item {
   cost: number;
   rate: number;
   emoji: string;
+  description: string;
 }
 
 const avaliableItems: Item[] = [
-  { name: "Hen", cost: 10, rate: 0.1, emoji: "🐣" },
-  { name: "Duck", cost: 100, rate: 2, emoji: "🦆" },
-  { name: "Golden Goose", cost: 1000, rate: 50, emoji: "🦄" },
+  {
+    name: "Hen",
+    cost: 10,
+    rate: 0.1,
+    emoji: "🐣",
+    description: "Hen that lays eggs slowly but surely",
+  },
+  {
+    name: "Duck",
+    cost: 100,
+    rate: 2,
+    emoji: "🦆",
+    description: "Quacks a lot but helps gather eggs",
+  },
+  {
+    name: "Swan",
+    cost: 250,
+    rate: 10,
+    emoji: "🦢",
+    description: "Elegantly and efficiently lays eggs",
+  },
+  {
+    name: "Peacock",
+    cost: 500,
+    rate: 25,
+    emoji: "🦚",
+    description: "Struts to help boost egg emprie",
+  },
+  {
+    name: "Golden Goose",
+    cost: 1000,
+    rate: 50,
+    emoji: "🦄",
+    description: "Mythical creature that lays pure golden eggs",
+  },
 ];
 
 const upgradeButtons: HTMLButtonElement[] = [];
@@ -51,9 +85,15 @@ const upgradeButtons: HTMLButtonElement[] = [];
 avaliableItems.forEach((item) => {
   const upgradeButton = document.createElement("button");
   upgradeButton.textContent =
-    `Click Me To Gain a ${item.name} ${item.emoji} (${item.cost} eggs!!) +${item.rate} eggs/sec`;
+    `Click Me To Gain a ${item.name} ${item.emoji} (${item.cost} eggs!!)`;
   upgradeButton.disabled = true;
   document.body.appendChild(upgradeButton);
+
+  const desc = document.createElement("p");
+  desc.textContent = item.description + ` +${item.rate} eggs/sec`;
+  desc.style.fontStyle = "airel";
+  desc.style.marginTop = "2px";
+  document.body.appendChild(desc);
 
   upgradeButton.addEventListener("click", () => {
     if (count >= item.cost) {
@@ -65,7 +105,7 @@ avaliableItems.forEach((item) => {
       }!`;
       upgradeButton.textContent = `Click Me To Gain a ${item.emoji} (${
         item.cost.toFixed(0)
-      } eggs!!) +${item.rate}eggs/sec`;
+      } eggs!!)`;
     }
   });
   upgradeButtons.push(upgradeButton);
@@ -85,7 +125,7 @@ function step(timestamp: number) {
   requestAnimationFrame(step);
 }
 requestAnimationFrame(step);
-/*
+/* Old Buttons
 requestAnimationFrame(step);
 let upButtonAcost = 10;
 let upButtonBcost = 100;
