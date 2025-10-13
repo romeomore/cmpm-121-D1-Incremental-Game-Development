@@ -18,7 +18,7 @@ counterDisplay.textContent = `You have ${count} eggs!`;
 document.body.appendChild(counterDisplay);
 
 button.addEventListener("click", () => {
-  count++;
+  count += 1;
   counterDisplay.textContent = `You have ${count} eggs!`;
 });
 /* Old Automatic Clicking
@@ -41,46 +41,61 @@ function step(timestamp: number) {
 
   count += delta * growthRate;
   counterDisplay.textContent = `You have ${Math.floor(count)} eggs!`;
-  upgradeButtonA.disabled = Math.floor(count) < 10;
-  upgradeButtonB.disabled = Math.floor(count) < 100;
-  upgradeButtonC.disabled = Math.floor(count) < 1000;
+  upgradeButtonA.disabled = Math.floor(count) < upButtonAcost;
+  upgradeButtonB.disabled = Math.floor(count) < upButtonBcost;
+  upgradeButtonC.disabled = Math.floor(count) < upButtonCcost;
   requestAnimationFrame(step);
 }
 requestAnimationFrame(step);
+let upButtonAcost = 10;
+let upButtonBcost = 100;
+let upButtonCcost = 1000;
 
 const upgradeButtonA = document.createElement("button");
-upgradeButtonA.textContent = "Click Me To Gain a Hun(10 eggs)";
+upgradeButtonA.textContent = `Click Me To Gain a Hun (${upButtonAcost} eggs)`;
 document.body.appendChild(upgradeButtonA);
 
 upgradeButtonA.addEventListener("click", () => {
-  if (count >= 10) {
-    count -= 10;
+  if (count >= upButtonAcost) {
+    count -= upButtonAcost;
     growthRate += .1;
     grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
+    upButtonAcost *= 1.15;
+    upgradeButtonA.textContent = `Click Me To Gain a Hun (${
+      upButtonAcost.toFixed(0)
+    } eggs)`;
   }
 });
 
 const upgradeButtonB = document.createElement("button");
-upgradeButtonB.textContent = "Click Me To Gain a Hun(100 eggs)";
+upgradeButtonB.textContent = `Click Me To Gain a Hun (${upButtonBcost} eggs)`;
 document.body.appendChild(upgradeButtonB);
 
 upgradeButtonB.addEventListener("click", () => {
-  if (count >= 100) {
-    count -= 100;
+  if (count >= upButtonBcost) {
+    count -= upButtonBcost;
     growthRate += 2;
     grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
+    upButtonBcost *= 1.15;
+    upgradeButtonB.textContent = `Click Me To Gain a Hun (${
+      upButtonBcost.toFixed(0)
+    } eggs)`;
   }
 });
 
 const upgradeButtonC = document.createElement("button");
-upgradeButtonC.textContent = "Click Me To Gain a Hun(1000 eggs)";
+upgradeButtonC.textContent = `Click Me To Gain a Hun (${upButtonCcost} eggs)`;
 document.body.appendChild(upgradeButtonC);
 
 upgradeButtonC.addEventListener("click", () => {
-  if (count >= 1000) {
-    count -= 1000;
+  if (count >= upButtonCcost) {
+    count -= upButtonCcost;
     growthRate += 50;
     grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
+    upButtonCcost *= 1.15;
+    upgradeButtonC.textContent = `Click Me To Gain a Hun (${
+      upButtonCcost.toFixed(0)
+    } eggs)`;
   }
 });
 
