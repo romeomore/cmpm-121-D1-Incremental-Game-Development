@@ -38,20 +38,54 @@ function step(timestamp: number) {
   }
   const delta = (timestamp - start) / 1000;
   start = timestamp;
+
   count += delta * growthRate;
   counterDisplay.textContent = `You have ${Math.floor(count)} eggs!`;
-  upgradeButton.disabled = Math.floor(count) < 10;
+  upgradeButtonA.disabled = Math.floor(count) < 10;
+  upgradeButtonB.disabled = Math.floor(count) < 100;
+  upgradeButtonC.disabled = Math.floor(count) < 1000;
   requestAnimationFrame(step);
 }
 requestAnimationFrame(step);
 
-const upgradeButton = document.createElement("button");
-upgradeButton.textContent = "Click Me To Gain a Hun(10 eggs)";
-document.body.appendChild(upgradeButton);
+const upgradeButtonA = document.createElement("button");
+upgradeButtonA.textContent = "Click Me To Gain a Hun(10 eggs)";
+document.body.appendChild(upgradeButtonA);
 
-upgradeButton.addEventListener("click", () => {
+upgradeButtonA.addEventListener("click", () => {
   if (count >= 10) {
     count -= 10;
-    growthRate++;
+    growthRate += .1;
+    grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
   }
 });
+
+const upgradeButtonB = document.createElement("button");
+upgradeButtonB.textContent = "Click Me To Gain a Hun(100 eggs)";
+document.body.appendChild(upgradeButtonB);
+
+upgradeButtonB.addEventListener("click", () => {
+  if (count >= 100) {
+    count -= 100;
+    growthRate += 2;
+    grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
+  }
+});
+
+const upgradeButtonC = document.createElement("button");
+upgradeButtonC.textContent = "Click Me To Gain a Hun(1000 eggs)";
+document.body.appendChild(upgradeButtonC);
+
+upgradeButtonC.addEventListener("click", () => {
+  if (count >= 1000) {
+    count -= 1000;
+    growthRate += 50;
+    grDisplay.textContent = `Current Growth Rate is ${growthRate.toFixed(1)}!`;
+  }
+});
+
+const grDisplay = document.createElement("div");
+document.body.appendChild(grDisplay);
+grDisplay.textContent = `Current Growth Rate is ${
+  growthRate.toFixed(1)
+} eggs/sec!`;
