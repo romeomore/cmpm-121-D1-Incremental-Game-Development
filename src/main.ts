@@ -19,7 +19,7 @@ interface Item {
   quantity: number;
 }
 
-const avaliableItems: Item[] = [
+const shopItems: Item[] = [
   {
     name: "Hen",
     cost: 10,
@@ -74,24 +74,24 @@ const button = document.createElement("button");
 button.textContent = "Click Me To Gain An Egg!!🥚";
 document.body.appendChild(button);
 
-const counterDisplay = document.createElement("div");
-counterDisplay.textContent = `You have ${count} eggs!`;
-document.body.appendChild(counterDisplay);
+const eggCountDisplay = document.createElement("div");
+eggCountDisplay.textContent = `You have ${count} eggs!`;
+document.body.appendChild(eggCountDisplay);
 
-const grDisplay = document.createElement("div");
-grDisplay.textContent = `Current Growth Rate is ${
+const growthRateDisplay = document.createElement("div");
+growthRateDisplay.textContent = `Current Growth Rate is ${
   growthRate.toFixed(1)
 } eggs/sec!`;
-document.body.appendChild(grDisplay);
+document.body.appendChild(growthRateDisplay);
 
-const upgradeButtons: HTMLButtonElement[] = [];
+const itemButtons: HTMLButtonElement[] = [];
 
-avaliableItems.forEach((item) => {
-  const upgradeButton = document.createElement("button");
-  upgradeButton.textContent =
+shopItems.forEach((item) => {
+  const itemButton = document.createElement("button");
+  itemButton.textContent =
     `Click Me To Gain a ${item.name} ${item.emoji} (${item.cost} eggs!!)`;
-  upgradeButton.disabled = true;
-  document.body.appendChild(upgradeButton);
+  itemButton.disabled = true;
+  document.body.appendChild(itemButton);
 
   const desc = document.createElement("p");
   desc.textContent = item.description + ` +${item.rate} eggs/sec`;
@@ -99,7 +99,7 @@ avaliableItems.forEach((item) => {
   desc.style.marginTop = "2px";
   document.body.appendChild(desc);
 
-  upgradeButtons.push(upgradeButton);
+  itemButtons.push(itemButton);
 });
 
 const ownedDisplay = document.createElement("div");
@@ -115,24 +115,23 @@ document.body.appendChild(ownedDisplay);
 // -----------------------------
 button.addEventListener("click", () => {
   count += 1;
-  counterDisplay.textContent = `You have ${count} eggs! 🥚`;
+  eggCountDisplay.textContent = `You have ${count} eggs! 🥚`;
 });
-
-avaliableItems.forEach((item, i) => {
-  const upgradeButton = upgradeButtons[i];
-  upgradeButton.addEventListener("click", () => {
+shopItems.forEach((item, i) => {
+  const itemButton = itemButtons[i];
+  itemButton.addEventListener("click", () => {
     if (count >= item.cost) {
       count -= item.cost;
       growthRate += item.rate;
       item.cost *= 1.15;
       item.quantity += 1;
-      grDisplay.textContent = `Current Growth Rate is ${
+      growthRateDisplay.textContent = `Current Growth Rate is ${
         growthRate.toFixed(1)
       }!`;
-      upgradeButton.textContent = `Click Me To Gain a ${item.emoji} (${
+      itemButton.textContent = `Click Me To Gain a ${item.emoji} (${
         item.cost.toFixed(0)
       } eggs!!)`;
-      updateOwnedDisplay();
+      renderOwnedItems();
     }
   });
 });
@@ -141,27 +140,26 @@ avaliableItems.forEach((item, i) => {
 // Update functions
 // step, updateOwnedDisplay
 // -----------------------------
-function updateOwnedDisplay() {
+function renderOwnedItems() {
   ownedDisplay.innerHTML = "<strong>Owned Items:</strong><br>";
-  avaliableItems.forEach((item) => {
+  shopItems.forEach((item) => {
     if (item.quantity > 0) {
-      ownedDisplay.innerHTML +=
-        `${item.emoji} ${item.name}: ${item.quantity}<br>`;
+      ownedDisplay.innerHTML += `${item.emoji} ${item.name}: ${item.quantity}<br>`;
     }
   });
 }
 
-function step(timestamp: number) {
+function gameLoop(timestamp: number) {
   if (start === undefined) {
     start = timestamp;
   }
   const delta = (timestamp - start) / 1000;
   start = timestamp;
   count += delta * growthRate;
-  counterDisplay.textContent = `You have ${Math.floor(count)} eggs! 🥚`;
-  avaliableItems.forEach((item, i) => {
-    upgradeButtons[i].disabled = Math.floor(count) < item.cost;
+  eggCountDisplay.textContent = `You have ${Math.floor(count)} eggs! 🥚`;
+  shopItems.forEach((item, i) => {
+    itemButtons[i].disabled = Math.floor(count) < item.cost;
   });
-  requestAnimationFrame(step);
+  requestAnimationFrame(gameLoop);
 }
-requestAnimationFrame(step);
+requestAnimationFrame(gameLoop);
