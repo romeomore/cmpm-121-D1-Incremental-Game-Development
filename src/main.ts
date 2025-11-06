@@ -1,32 +1,15 @@
 import "./style.css";
 
+// -----------------------------
+// Game state
+// -----------------------------
 let count = 0;
 let start: number;
 let growthRate = 1;
 
-const subtitle = document.createElement("p");
-subtitle.textContent = "Hello World, I'm an egg counter";
-document.body.appendChild(subtitle);
-
-const button = document.createElement("button");
-button.textContent = "Click Me To Gain An Egg!!🥚";
-document.body.appendChild(button);
-
-const counterDisplay = document.createElement("div");
-counterDisplay.textContent = `You have ${count} eggs!`;
-document.body.appendChild(counterDisplay);
-
-const grDisplay = document.createElement("div");
-document.body.appendChild(grDisplay);
-grDisplay.textContent = `Current Growth Rate is ${
-  growthRate.toFixed(1)
-} eggs/sec!`;
-
-button.addEventListener("click", () => {
-  count += 1;
-  counterDisplay.textContent = `You have ${count} eggs! 🥚`;
-});
-
+// -----------------------------
+// Game data
+// -----------------------------
 interface Item {
   name: string;
   cost: number;
@@ -79,6 +62,28 @@ const avaliableItems: Item[] = [
   },
 ];
 
+// -----------------------------
+// UI elements
+// Group all document.createElement calls here
+// -----------------------------
+const subtitle = document.createElement("p");
+subtitle.textContent = "Hello World, I'm an egg counter";
+document.body.appendChild(subtitle);
+
+const button = document.createElement("button");
+button.textContent = "Click Me To Gain An Egg!!🥚";
+document.body.appendChild(button);
+
+const counterDisplay = document.createElement("div");
+counterDisplay.textContent = `You have ${count} eggs!`;
+document.body.appendChild(counterDisplay);
+
+const grDisplay = document.createElement("div");
+grDisplay.textContent = `Current Growth Rate is ${
+  growthRate.toFixed(1)
+} eggs/sec!`;
+document.body.appendChild(grDisplay);
+
 const upgradeButtons: HTMLButtonElement[] = [];
 
 avaliableItems.forEach((item) => {
@@ -94,6 +99,27 @@ avaliableItems.forEach((item) => {
   desc.style.marginTop = "2px";
   document.body.appendChild(desc);
 
+  upgradeButtons.push(upgradeButton);
+});
+
+const ownedDisplay = document.createElement("div");
+ownedDisplay.style.marginTop = "20px";
+ownedDisplay.style.padding = "10px";
+ownedDisplay.style.borderTop = "2px solid #ccc";
+ownedDisplay.textContent = "Owned Items:";
+document.body.appendChild(ownedDisplay);
+
+// -----------------------------
+// Event listeners
+// Group addEventListener calls here
+// -----------------------------
+button.addEventListener("click", () => {
+  count += 1;
+  counterDisplay.textContent = `You have ${count} eggs! 🥚`;
+});
+
+avaliableItems.forEach((item, i) => {
+  const upgradeButton = upgradeButtons[i];
   upgradeButton.addEventListener("click", () => {
     if (count >= item.cost) {
       count -= item.cost;
@@ -109,15 +135,12 @@ avaliableItems.forEach((item) => {
       updateOwnedDisplay();
     }
   });
-  upgradeButtons.push(upgradeButton);
 });
-const ownedDisplay = document.createElement("div");
-ownedDisplay.style.marginTop = "20px";
-ownedDisplay.style.padding = "10px";
-ownedDisplay.style.borderTop = "2px solid #ccc";
-ownedDisplay.textContent = "Owned Items:";
-document.body.appendChild(ownedDisplay);
 
+// -----------------------------
+// Update functions
+// step, updateOwnedDisplay
+// -----------------------------
 function updateOwnedDisplay() {
   ownedDisplay.innerHTML = "<strong>Owned Items:</strong><br>";
   avaliableItems.forEach((item) => {
