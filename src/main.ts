@@ -144,7 +144,8 @@ function renderOwnedItems() {
   ownedDisplay.innerHTML = "<strong>Owned Items:</strong><br>";
   shopItems.forEach((item) => {
     if (item.quantity > 0) {
-      ownedDisplay.innerHTML += `${item.emoji} ${item.name}: ${item.quantity}<br>`;
+      ownedDisplay.innerHTML +=
+        `${item.emoji} ${item.name}: ${item.quantity}<br>`;
     }
   });
 }
