@@ -1,4 +1,6 @@
 import "./style.css";
+import eggImage from "./Egg.png.png";
+import _brickwallImage from "./brickwall.png";
 
 // -----------------------------
 // Game state
@@ -66,12 +68,15 @@ const shopItems: Item[] = [
 // UI elements
 // Group all document.createElement calls here
 // -----------------------------
+
 const subtitle = document.createElement("p");
 subtitle.textContent = "Hello World, I'm an egg counter";
 document.body.appendChild(subtitle);
 
 const button = document.createElement("button");
 button.textContent = "Click Me To Gain An Egg!!🥚";
+button.innerHTML +=
+  `<br><img src="${eggImage}" alt="Egg Image" width="299" height="200">`;
 document.body.appendChild(button);
 
 const eggCountDisplay = document.createElement("div");
@@ -116,6 +121,10 @@ document.body.appendChild(ownedDisplay);
 button.addEventListener("click", () => {
   count += 1;
   eggCountDisplay.textContent = `You have ${count} eggs! 🥚`;
+  button.classList.add("clicked");
+  setTimeout(() => {
+    button.classList.remove("clicked");
+  }, 100);
 });
 shopItems.forEach((item, i) => {
   const itemButton = itemButtons[i];

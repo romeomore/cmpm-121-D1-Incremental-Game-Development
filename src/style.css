@@ -3,3 +3,16 @@
   vertical-align: top;
   border: 1px solid salmon;
 }
+
+button {
+  transition: transfortm 0.2s ease;
+}
+
+button.clicked {
+  transform: scale(0.95);
+}
+
+body {
+  background-image: url("./brickwall.png");
+  background-size: cover;
+}
